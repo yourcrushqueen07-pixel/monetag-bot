@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monetag Ads Bot UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <!-- গুরুত্বপূর্ণ: এখানে আপনার Monetag অফিশিয়াল স্ক্রিপ্ট ট্যাগটি বসাবেন -->
+    <!-- <script src="https://alwingulla.com/88/vki/shareable/11209230/code.js" defer></script> -->
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #eef2f3; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .phone-container { width: 100%; max-width: 410px; background: #f5f7fb; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; height: 95vh; }
+        .header { background: #ffffff; padding: 15px; display: flex; align-items: center; border-bottom: 1px solid #e0e0e0; }
+        .header-info { margin-left: 15px; flex-grow: 1; }
+        .header-info h3 { font-size: 16px; color: #333; }
+        .header-info p { font-size: 12px; color: #777; }
+        .chat-content { padding: 15px; flex-grow: 1; overflow-y: auto; }
+        .welcome-box { background: #ffffff; padding: 15px; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 15px; border: 1px solid #e6ebf1; }
+        .welcome-box p { font-size: 14px; color: #333; line-height: 1.4; }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .btn { padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; }
+        .btn-watch { background-color: #2ca02c; }
+        .btn-auto { background-color: #3a86ff; }
+        .btn-stop { background-color: #e63946; width: 100%; margin-bottom: 15px; }
+        .divider { text-align: center; color: #666; font-size: 14px; margin: 15px 0; font-weight: 500; }
+        .config-btn { background: #7d8b99; color: white; width: 100%; padding: 12px; border: none; border-radius: 8px; margin-bottom: 8px; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 500; }
+        .btn-location { background: #ff9f1c; color: white; margin-top: 5px; }
+        .footer-nav { background: #ffffff; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #e0e0e0; }
+        .footer-nav i { font-size: 20px; color: #8fa0af; cursor: pointer; }
+        .footer-nav i.active { color: #3a86ff; }
+    </style>
+</head>
+<body>
+
+<div class="phone-container">
+    <div class="header">
+        <i class="fa-solid fa-arrow-left"></i>
+        <div class="header-info">
+            <h3>📢 Monetag Ads Bot</h3>
+            <p>bot</p>
+        </div>
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+    </div>
+
+    <div class="chat-content">
+        <div class="welcome-box">
+            <p>👋 <strong>Welcome to Monetag Ads Bot!</strong><br>Generate revenue by watching ads. Choose an option below.</p>
+        </div>
+
+        <div class="btn-grid">
+            <button class="btn btn-watch" id="watchAdBtn"><i class="fa-solid fa-circle-play"></i> Watch Ads</button>
+            <button class="btn btn-auto" id="autoWatchBtn"><i class="fa-solid fa-arrows-rotate"></i> Auto Watch</button>
+        </div>
+        <button class="btn btn-stop" id="stopAutoBtn"><i class="fa-solid fa-stop"></i> Stop Auto Watch</button>
+
+        <div class="divider">--- Proxy Configuration ---</div>
+        <button class="config-btn"><i class="fa-solid fa-gear"></i> HOST</button>
+        <button class="config-btn"><i class="fa-solid fa-earth-americas"></i> PORT</button>
+        <button class="config-btn"><i class="fa-solid fa-user"></i> Username</button>
+        <button class="config-btn"><i class="fa-solid fa-key"></i> Password</button>
+        <button class="config-btn btn-location"><i class="fa-solid fa-map-location-dot"></i> Show Proxy Location</button>
+    </div>
+
+    <div class="footer-nav">
+        <i class="fa-solid fa-comment-dots active"></i>
+        <i class="fa-solid fa-user-gear"></i>
+        <i class="fa-solid fa-sliders"></i>
+        <i class="fa-solid fa-gear"></i>
+    </div>
+</div>
+
+<script>
+    // Telegram Web App Initialize
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
+    }
+
+    let autoWatchInterval = null;
+
+    document.getElementById('watchAdBtn').addEventListener('click', () => runMonetagAd());
+
+    document.getElementById('autoWatchBtn').addEventListener('click', () => {
+        if(autoWatchInterval) return alert('Already running!');
+        alert('Auto Watch Started! Ads will load every 15 seconds.');
+        autoWatchInterval = setInterval(() => runMonetagAd(), 15000); 
+    });
+
+    document.getElementById('stopAutoBtn').addEventListener('click', () => {
+        if(autoWatchInterval) {
+            clearInterval(autoWatchInterval);
+            autoWatchInterval = null;
+            alert('Auto Watch Stopped!');
+        }
+    });
+
+    function runMonetagAd() {
+        if (typeof show_11209230 === "function") {
+            show_11209230().then(() => {
+                alert('You have seen an ad! Reward Added.');
+            }).catch((err) => {
+                console.error("Ad error: ", err);
+            });
+        } else {
+            alert('Simulation: Monetag SDK Show_11209230 triggered!');
+        }
+    }
+</script>
+</body>
+</html>
